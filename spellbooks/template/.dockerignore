@@ -1,0 +1,8 @@
+# project-specific
+
+# dependency folders
+vendor/*/*
+
+# build folders
+
+# essentially: ignore everything except source files and the pinned-dependencies file

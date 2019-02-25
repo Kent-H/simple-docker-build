@@ -1,0 +1,6 @@
+# IDE
+# just my editor's clutter...
+/.idea
+
+# misc
+.DS_Store

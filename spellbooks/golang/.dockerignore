@@ -1,0 +1,4 @@
+# project-specific
+
+# ignore development folders
+vendor/*/*
