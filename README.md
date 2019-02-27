@@ -4,7 +4,8 @@ A simple yet powerful docker base to use when starting new projects.
 
 ### Supported Languages
 
-* Golang
+* [Golang](spellbooks/golang/)
+* [Javascript](spellbooks/javascript/)
 
 ### Features
 
@@ -34,7 +35,7 @@ A simple yet powerful docker base to use when starting new projects.
 
 1. Copy the build.sh script from this project to the root of your project.
 1. Change the first few lines of the build script `NAME=""`, `REPO=""` to use the desired docker image tag.
-1. Copy the `Dockerfile` and `.dockerignore` from the relevant `spellbooks/{language}/` to the root of your project.
+1. Copy the `Dockerfile`, `.dockerignore`, and any other relevant files from the relevant `spellbooks/{language}/` to the root of your project.
 1. Follow any instructions in `spellbooks/{language}/README.md`<br/>
    <br/>
    Test by running `./build.sh`

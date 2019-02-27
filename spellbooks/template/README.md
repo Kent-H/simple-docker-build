@@ -1,5 +1,7 @@
 ## *Language Name* `Dockerfile` and `.dockerignore`
 
+<!-- brief container description -->
+
 ### Usage
 
 See the [top-level README](../../README.md) for complete usage instructions.
