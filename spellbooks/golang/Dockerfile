@@ -1,14 +1,14 @@
 FROM golang:1.9 as build
 
-# project-specific information
-ARG PROJECT_PATH=github.com/kent-h/nextslope-backend
-ARG INJECT_PACKAGE_PATH="main"
-ARG FILE_NAME="nextslope-backend"
-
-WORKDIR /go/src/$PROJECT_PATH
-
 # get and install dependencies
 RUN go get -u github.com/kardianos/govendor
+
+# project-specific information
+ARG PROJECT_PATH=github.com/repo/path
+ARG INJECT_PACKAGE_PATH=main
+ARG MAIN_PATH=main/main.go
+
+WORKDIR /go/src/$PROJECT_PATH
 
 # copy in pinned code dependency file(s)
 COPY vendor/vendor.json vendor/
@@ -21,34 +21,30 @@ RUN govendor install -v -tags netgo +vendor
 ARG GIT_BRANCH
 ARG GIT_COMMIT_NUM
 ARG GIT_COMMIT
-ARG CHANGED
+ARG GIT_UNCOMMITTED_CHANGES
 
 # bring in source files
 COPY . ./
 
 # build static binary
 RUN go build -v -tags netgo \
-	--ldflags "-extldflags \"-static\" \
-	-X \"$INJECT_PACKAGE_PATH.GIT_BRANCH=$GIT_BRANCH\" \
-	-X \"$INJECT_PACKAGE_PATH.GIT_COMMIT_NUM=$GIT_COMMIT_NUM\" \
-	-X \"$INJECT_PACKAGE_PATH.GIT_COMMIT=$GIT_COMMIT\" \
-	-X \"$INJECT_PACKAGE_PATH.CHANGED=$CHANGED\"" \
-	-o build/$FILE_NAME main.go
+  --ldflags "-extldflags \"-static\" \
+  -X \"$INJECT_PACKAGE_PATH.GIT_BRANCH=$GIT_BRANCH\" \
+  -X \"$INJECT_PACKAGE_PATH.GIT_COMMIT_NUM=$GIT_COMMIT_NUM\" \
+  -X \"$INJECT_PACKAGE_PATH.GIT_COMMIT=$GIT_COMMIT\" \
+  -X \"$INJECT_PACKAGE_PATH.GIT_UNCOMMITTED_CHANGES=$GIT_UNCOMMITTED_CHANGES\"" \
+  -o /go/bin/executable "$MAIN_PATH"
 
 
 
 # create final container
 FROM alpine:3.6
 
-# project-specific information
-ARG PROJECT_PATH=github.com/kent-h/nextslope-backend
-ARG FILE_NAME=nextslope-backend
-
 # add static dependencies
 RUN apk --no-cache add ca-certificates
 
 # copy final resources from last build stage
-COPY --from=build /go/src/$PROJECT_PATH/build/$FILE_NAME /bin/$FILE_NAME
+COPY --from=build /go/bin/executable /bin/executable
 
 # startup command
-CMD ["nextslope-backend"]
+CMD ["executable"]

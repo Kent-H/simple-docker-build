@@ -23,7 +23,7 @@ A simple yet powerful docker base to use when starting new projects.
     * `BRANCH_NAME`
     * `COMMIT_NUMBER` (counted from the initial commit)
     * `GIT_COMMIT` (a hash)
-    * `CHANGED` (a git working tree modified flag)
+    * `GIT_UNCOMMITTED_CHANGES` (a git working tree modified flag)
   * A build initiated with a clean git repository, will result in an image with a tag of the form:<br/>
     `$REPO$NAME:0.$COMMIT_NUMBER` (if on the master branch)<br/>
     or<br/>

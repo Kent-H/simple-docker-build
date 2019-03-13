@@ -16,7 +16,7 @@ FROM <name>:<pinned version> as build
 ARG GIT_BRANCH
 ARG GIT_COMMIT_NUM
 ARG GIT_COMMIT
-ARG CHANGED
+ARG GIT_UNCOMMITTED_CHANGES
 
 # bring in source files
 # COPY . ./

@@ -1,6 +1,5 @@
 FROM node:10.15.1-alpine as build
 
-# project-specific information
 WORKDIR /root
 
 # copy in pinned code dependency file(s)
@@ -15,7 +14,7 @@ RUN npm ci
 # ARG GIT_BRANCH
 # ARG GIT_COMMIT_NUM
 # ARG GIT_COMMIT
-# ARG CHANGED
+# ARG GIT_UNCOMMITTED_CHANGES
 
 # bring in source files
 COPY ./public/ /root/public
